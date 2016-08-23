@@ -7,7 +7,7 @@ import os
 
 
 def socket_send(command):
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock = socket.socket()
     sock.connect(('127.0.0.1', 1000))
     sock.send(command)
     result = sock.recv(2048)
@@ -16,6 +16,5 @@ def socket_send(command):
 
 
 if __name__ == '__main__':
-    a = ' '.join(sys.argv[1:])
-    a = os.getcwd() + '#*#*#' + a
-    print(socket_send(a))
+    cmd = os.getcwd() + '#*#*#' + ' '.join(sys.argv[1:])
+    print(socket_send(cmd))

