@@ -16,7 +16,7 @@ def main():
             cmd = conn.recv(2048).decode('utf-8').split('#*#*#')
             os.chdir(convert(cmd[0]))
             try:
-                result = subprocess.check_output(cmd[1])
+                result = subprocess.check_output('cmd /C ' + cmd[1])  # or ('powerShell /C ' + cmd[1]) if you prefer
             except Exception as e:
                 result = str(e).encode('utf-8')
             conn.send(result)
@@ -31,7 +31,7 @@ def convert(path):
     if path.startswith('/mnt'):
         path = path[5] + ':' + path[6:]
     else:
-        path = 'C:/Users/icris/AppData/Local/lxss' + path
+        path = os.environ['localAppData'].replace("\\", "/") + '/lxss' + path
     return path
 
 
