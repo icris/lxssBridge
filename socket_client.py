@@ -7,13 +7,15 @@ import os
 
 
 def socket_send(command):
-    sock = socket.socket()
-    sock.connect(('127.0.0.1', 1000))
-    sock.send(command)
-    result = sock.recv(2048)
-    sock.close()
-    return result
-
+    try:
+        sock = socket.socket()
+        sock.connect(('127.0.0.1', 1000))
+        sock.send(command)
+        result = sock.recv(2048)
+        sock.close()
+        return result
+    except KeyboardInterrupt:
+        return 'canceled by user'
 
 if __name__ == '__main__':
     cmd = os.getcwd() + '#*#*#' + ' '.join(sys.argv[1:])
